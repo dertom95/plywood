@@ -21,6 +21,7 @@ struct TargetInstantiatorArgs {
     BuildTarget* buildTarget = nullptr;
 
     PLY_BUILD_ENTRY void addIncludeDir(Visibility visibility, StringView includeDir);
+    PLY_BUILD_ENTRY void addResourceDir(StringView sourceFolder, StringView relDestinationFolder=".");
     PLY_BUILD_ENTRY void addSourceFiles(StringView sourcePath, bool recursive = true);
     PLY_BUILD_ENTRY void addSourceFilesWhenImported(StringView sourceRoot,
                                                     ArrayView<const StringView> relPaths);

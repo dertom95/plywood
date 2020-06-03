@@ -23,6 +23,11 @@ struct BuildTarget : Dependency {
         Array<String> relFiles;
     };
 
+    struct ResourceCopyFolders {
+        String resFolderSource;
+        String resFolderDestinationRelative;
+    };
+
     struct PrecompiledHeaderPair {
         String generatorSourcePath;
         String pchInclude;
@@ -32,8 +37,10 @@ struct BuildTarget : Dependency {
     String name;
     BuildTarget* sharedContainer = nullptr;
     String dynamicLinkPrefix;
+
     Array<SourceFilesPair> sourceFiles;
     Array<SourceFilesPair> sourceFilesWhenImported;
+    Array<ResourceCopyFolders> resourceCopyFolders;
     Array<String> privateIncludeDirs;
     Array<PreprocessorDefinition> privateDefines;
     Array<String> privateAbstractFlags;
@@ -43,6 +50,7 @@ struct BuildTarget : Dependency {
     PLY_INLINE BuildTarget() : Dependency{DependencyType::Target} {
     }
     PLY_NO_INLINE void addIncludeDir(Visibility visibility, StringView absIncludeDir);
+    PLY_NO_INLINE void addResourceFolder(StringView resourcFolder, StringView targetFolder);
     PLY_NO_INLINE void addSourceFiles(StringView absSourcePath, bool recursive = true);
     PLY_NO_INLINE void addSourceFilesWhenImported(StringView absSourceRoot,
                                                   ArrayView<const StringView> relPaths);

@@ -223,6 +223,16 @@ include("${CMAKE_CURRENT_LIST_DIR}/Helper.cmake")
                        "\"${WORKSPACE_FOLDER}\")\n";
             }
         }
+
+        // copy resource-folders via add_custom_command
+        ArrayView<const BuildTarget::ResourceCopyFolders> resourceCopyFolders = buildTarget->resourceCopyFolders.view();
+        for (const BuildTarget::ResourceCopyFolders& resCopyFolder : resourceCopyFolders) {
+            *sw << "add_custom_command(TARGET " << uniqueTargetName << " POST_BUILD \n";
+            *sw <<     "COMMAND ${CMAKE_COMMAND} -E copy_directory \n";
+            *sw <<     "        " << resCopyFolder.resFolderSource << " \n";
+            *sw <<     "        ${CMAKE_CURRENT_BINARY_DIR}/" << resCopyFolder.resFolderDestinationRelative << " )\n\n";
+
+        }
     }
 }
 

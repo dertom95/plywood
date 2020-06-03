@@ -19,6 +19,13 @@ PLY_NO_INLINE void TargetInstantiatorArgs::addIncludeDir(Visibility visibility,
     this->buildTarget->addIncludeDir(visibility, absIncludeDir);
 }
 
+PLY_NO_INLINE void TargetInstantiatorArgs::addResourceDir(StringView sourceFolder,
+                                                          StringView relDestinationFolder) {
+    String absSourceFolder = NativePath::join(this->targetInst->instantiatorPath, sourceFolder);
+    this->buildTarget->addResourceFolder(absSourceFolder, relDestinationFolder);
+}
+
+
 PLY_NO_INLINE void TargetInstantiatorArgs::addSourceFiles(StringView sourcePath, bool recursive) {
     String absSourcePath = NativePath::join(this->targetInst->instantiatorPath, sourcePath);
     this->buildTarget->addSourceFiles(absSourcePath, recursive);

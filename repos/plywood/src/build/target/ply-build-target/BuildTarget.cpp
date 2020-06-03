@@ -18,6 +18,12 @@ PLY_NO_INLINE void BuildTarget::addIncludeDir(Visibility visibility, StringView 
     this->privateIncludeDirs.append(std::move(absIncludeDir));
 }
 
+PLY_NO_INLINE void BuildTarget::addResourceFolder(StringView resourceFolder, StringView targetFolder) {
+    PLY_ASSERT(NativePath::isAbsolute(resourceFolder) && NativePath::isNormalized(resourceFolder));
+    PLY_ASSERT(!NativePath::isAbsolute(targetFolder) && NativePath::isNormalized(targetFolder));
+    this->resourceCopyFolders.append({std::move(resourceFolder),std::move(targetFolder)});
+}
+
 PLY_NO_INLINE void BuildTarget::addSourceFiles(StringView absSourcePath, bool recursive) {
     PLY_ASSERT(NativePath::isAbsolute(absSourcePath) && NativePath::isNormalized(absSourcePath));
     Array<StringView> sourceExts = {".c", ".cpp"};
